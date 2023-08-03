@@ -49,7 +49,10 @@
                                                             <div class="col-sm-8 fs-3">
                                                                 <select class="form-select" name="" id="">
                                                                     <option value="" selected>BANDUNG</option>
+                                                                    <option value="">BANDUNG BARAT</option>
+                                                                    <option value="">CIREBON</option>
                                                                     <option value="">KARAWANG</option>
+                                                                    <option value="">SUKABUMI</option>
                                                                     <option value="">TASIKMALAYA</option>
                                                                 </select>
                                                             </div>
@@ -85,8 +88,8 @@
                                                             <label for="" class="col-sm-4">Akses</label>
                                                             <div class="col-sm-8 fs-6">
                                                                 <select class="form-select" name="" id="">
-                                                                    <option value="" selected>Guest</option>
-                                                                    <option value="">Admin</option>
+                                                                    <option value="" selected>Admin</option>
+                                                                    <option value="">Validator</option>
                                                                     <option value="">Petugas</option>
                                                                 </select>
                                                             </div>
@@ -148,7 +151,10 @@
                                                                                 <div class="col-sm-8 fs-3">
                                                                                     <select class="form-select" name="" id="">
                                                                                         <option value="" selected>BANDUNG</option>
+                                                                                        <option value="">BANDUNG BARAT</option>
+                                                                                        <option value="">CIREBON</option>
                                                                                         <option value="">KARAWANG</option>
+                                                                                        <option value="">SUKABUMI</option>
                                                                                         <option value="">TASIKMALAYA</option>
                                                                                     </select>
                                                                                 </div>
@@ -184,8 +190,8 @@
                                                                                 <label for="" class="col-sm-4">Akses</label>
                                                                                 <div class="col-sm-8 fs-6">
                                                                                     <select class="form-select" name="" id="">
-                                                                                        <option value="" selected>Guest</option>
-                                                                                        <option value="">Admin</option>
+                                                                                        <option value="" selected>Admin</option>
+                                                                                        <option value="">Validator</option>
                                                                                         <option value="">Petugas</option>
                                                                                     </select>
                                                                                 </div>
@@ -200,7 +206,11 @@
                                                                     </div>
                                                             </div>
                                                             </a>
-                                                            
+                                                            | 
+                                                            <a href="">
+                                                                <i class="uil uil-trash"></i>
+                                                                Delete
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
