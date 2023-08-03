@@ -104,7 +104,6 @@ form .form-group {
     margin-top: 6px;
     font-size : 13px;
     color     : var(--text-content);
-    width     : 8%;
 }
 
 .form-group .form-cs {
