@@ -35,7 +35,7 @@
 
                                 <form action="" method="">
                                     <div class="form-group">
-                                        <label for="" style="">Periode :</label>
+                                        <label for="" style="">Periode</label>
                                         <div class="bulan">
                                             <select class="form-cs" type="text" name="bulan" id="">
                                           <option value="01">Januari</option>
