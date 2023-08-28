@@ -57,14 +57,14 @@
                                           NOMER SC</th>
                                         <th style="vertical-align: middle;" width="1%" nowrap="">:
                                         </th>
-                                        <td colspan="2"> 123456   </td>
+                                        <td colspan="2"> {{ $pelanggans->number }}   </td>
                                       </tr>
                                       <tr>
                                         <th style="vertical-align: middle;" width="1%" nowrap="">INET
                                         </th>
                                         <th style="vertical-align: middle;" width="1%" nowrap="">:
                                         </th>
-                                        <td colspan="2">  1231234 </td>
+                                        <td colspan="2">  {{ $pelanggans->inet }} </td>
                                       </tr>
                                       <tr>
                                         <th style="vertical-align: middle;" width="1%" nowrap="">NAMA
@@ -101,7 +101,7 @@
                                           LOC_ID</th>
                                         <th style="vertical-align: middle;" width="1%" nowrap="">:
                                         </th>
-                                        <td colspan="2"> ODP-BDG-BJS/123 </td>
+                                        <td colspan="2">ODP-{{ $pelanggans->area }}/{{ $pelanggans->odp_loc }} </td>
                                       </tr>
                                     </tbody>
                                   </table>
