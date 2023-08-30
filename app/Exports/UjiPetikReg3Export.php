@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Pelanggan;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -69,9 +70,10 @@ class UjiPetikReg3Export implements FromView, WithHeadings, WithStyles, WithEven
         $results = Pelanggan::select('area')
             ->whereYear('pelanggans.created_at', $this->year)
             ->whereMonth('pelanggans.created_at', $this->month)
-            ->selectRaw('COUNT(DISTINCT id) AS total_pelanggan')
-            ->selectRaw('SUM(CASE WHEN NOT EXISTS (SELECT 1 FROM pelanggan_fotos pf WHERE pf.pelanggans_id = pelanggans.id AND pf.status = "nok") THEN 1 ELSE 0 END) AS total_ok')
-            ->selectRaw('SUM(CASE WHEN EXISTS (SELECT 1 FROM pelanggan_fotos pf WHERE pf.pelanggans_id = pelanggans.id AND pf.status = "nok") THEN 1 ELSE 0 END) AS total_nok')
+            ->selectRaw('COUNT(DISTINCT pelanggans.id) AS total_pelanggan')
+            ->selectRaw('SUM(CASE WHEN subquery.total_nok > 0 THEN 1 ELSE 0 END) AS total_nok')
+            ->selectRaw('SUM(CASE WHEN subquery.total_ok = 28 THEN 1 ELSE 0 END) AS total_ok')
+            ->leftJoin(DB::raw('(SELECT pelanggans_id, SUM(CASE WHEN status = "nok" THEN 1 ELSE 0 END) AS total_nok, SUM(CASE WHEN status = "ok" THEN 1 ELSE 0 END) AS total_ok FROM pelanggan_fotos GROUP BY pelanggans_id) AS subquery'), 'pelanggans.id', '=', 'subquery.pelanggans_id')
             ->whereIn('area', array_keys($this->areas))
             ->groupBy('area')
             ->get();

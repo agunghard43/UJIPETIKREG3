@@ -59,13 +59,14 @@ class DashboardController extends Controller
         // Periksa jika ada data untuk hari ini, jika tidak, set $todayResults menjadi array kosong.
         $todayResults = Pelanggan::select('area')
             ->whereDate('pelanggans.created_at', Carbon::today())
-            ->selectRaw('COUNT(DISTINCT id) AS total_pelanggan')
-            ->selectRaw('SUM(CASE WHEN NOT EXISTS (SELECT 1 FROM pelanggan_fotos pf WHERE pf.pelanggans_id = pelanggans.id AND pf.status = "nok") THEN 1 ELSE 0 END) AS total_ok')
-            ->selectRaw('SUM(CASE WHEN EXISTS (SELECT 1 FROM pelanggan_fotos pf WHERE pf.pelanggans_id = pelanggans.id AND pf.status = "nok") THEN 1 ELSE 0 END) AS total_nok')
+            ->selectRaw('COUNT(DISTINCT pelanggans.id) AS total_pelanggan')
+            ->selectRaw('SUM(CASE WHEN subquery.total_nok > 0 THEN 1 ELSE 0 END) AS total_nok')
+            ->selectRaw('SUM(CASE WHEN subquery.total_ok = 28 THEN 1 ELSE 0 END) AS total_ok')
+            ->leftJoin(DB::raw('(SELECT pelanggans_id, SUM(CASE WHEN status = "nok" THEN 1 ELSE 0 END) AS total_nok, SUM(CASE WHEN status = "ok" THEN 1 ELSE 0 END) AS total_ok FROM pelanggan_fotos GROUP BY pelanggans_id) AS subquery'), 'pelanggans.id', '=', 'subquery.pelanggans_id')
             ->whereIn('area', array_keys($this->areas))
             ->groupBy('area')
             ->get();
- 
+  
         // Jika tidak ada data untuk hari ini, buat hasil data kosong.
         if ($todayResults->isEmpty()) {
             $todayResults = collect($this->areas)->map(function($areaName, $areaCode) {
@@ -85,13 +86,14 @@ class DashboardController extends Controller
             $results = Pelanggan::select('area')
             ->whereYear('pelanggans.created_at', $year)
             ->whereMonth('pelanggans.created_at', $month)
-            ->selectRaw('COUNT(DISTINCT id) AS total_pelanggan')
-            ->selectRaw('SUM(CASE WHEN NOT EXISTS (SELECT 1 FROM pelanggan_fotos pf WHERE pf.pelanggans_id = pelanggans.id AND pf.status = "nok") THEN 1 ELSE 0 END) AS total_ok')
-            ->selectRaw('SUM(CASE WHEN EXISTS (SELECT 1 FROM pelanggan_fotos pf WHERE pf.pelanggans_id = pelanggans.id AND pf.status = "nok") THEN 1 ELSE 0 END) AS total_nok')
+            ->selectRaw('COUNT(DISTINCT pelanggans.id) AS total_pelanggan')
+            ->selectRaw('SUM(CASE WHEN subquery.total_nok > 0 THEN 1 ELSE 0 END) AS total_nok')
+            ->selectRaw('SUM(CASE WHEN subquery.total_ok = 28 THEN 1 ELSE 0 END) AS total_ok')
+            ->leftJoin(DB::raw('(SELECT pelanggans_id, SUM(CASE WHEN status = "nok" THEN 1 ELSE 0 END) AS total_nok, SUM(CASE WHEN status = "ok" THEN 1 ELSE 0 END) AS total_ok FROM pelanggan_fotos GROUP BY pelanggans_id) AS subquery'), 'pelanggans.id', '=', 'subquery.pelanggans_id')
             ->whereIn('area', array_keys($this->areas))
             ->groupBy('area')
             ->get();
-
+         
             if ($results->isEmpty()) {
                 $results = collect($this->areas)->map(function ($areaName, $areaCode) {
                     return [

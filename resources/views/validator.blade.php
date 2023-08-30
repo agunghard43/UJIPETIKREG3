@@ -90,9 +90,6 @@
                                                                 $no = 1
                                                             @endphp
                                                             @foreach ($pelangganFoto as $pelanggan)
-                                                            {{-- @php
-                                                                $buktiDiCek = session('bukti_dicek_' . $pelanggan->id)
-                                                            @endphp --}}
                                                                 <tr>
                                                                     <td>{{$no++}}</td>
                                                                     <td>
@@ -112,8 +109,7 @@
                                                                         <i class="uil uil-process"></i>
                                                                         Process
                                                                     </button></td>
-                                                                    <td>Open</td>
-                                                                    
+                                                                    <td>Progress</td>
                                                                     <td>
                                                                         @if (session('bukti_dicek_' . $pelanggan->id))
                                                                             Bukti Sudah Dicek
@@ -121,7 +117,6 @@
                                                                             <a class="cek-bukti-link" href="/validator/cek/{{$pelanggan->id}}">Cek Bukti</a>
                                                                         @endif
                                                                     </td>
-                                                                  
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>

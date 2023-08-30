@@ -102,8 +102,9 @@
                                                         <tbody>
                                                             @php
                                                             $no = 1
-                                                        @endphp
+                                                            @endphp
                                                         @foreach ($pelanggansIndex as $pelanggan)
+                                                        @if ($pelanggan->fotos->count() < 28 )
                                                         <tr>
                                                             <td>{{$no++}}</td>
                                                             <td>
@@ -124,9 +125,6 @@
                                                                 Process
                                                             </button></td>
                                                             <td>Open</td>
-                                                            @if ($pelanggan->fotos->count() >=28 )
-                                                            <td>Bukti sudah terupload</td>
-                                                            @elseif($pelanggan->fotos->count() <=28 )
                                                             <td>
                                                                 <a href="/petugas/add/{{$pelanggan->id}}">Add Bukti</a>
                                                             </td>
@@ -177,7 +175,7 @@
                                                                     <i class="uil uil-process"></i>
                                                                     Process
                                                                 </button></td>
-                                                                <td>Re-open</td>
+                                                                <td>NOK</td>
                                                                 {{-- @foreach ($pelanggan->fotos as $item)
                                                                 {{ $item->status_revisi }}
                                                                 @if ($item->status_revisi === 'NOK')

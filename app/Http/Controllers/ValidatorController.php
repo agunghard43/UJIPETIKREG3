@@ -23,24 +23,22 @@ class ValidatorController extends Controller
             "TSM" => 'TASIKMALAYA'
         ];
         
-        $pelangganFoto = Pelanggan::has('fotos','>=', 28)
-        ->with(['fotos' => function ($query) {
-            $query->select('pelanggans_id', 'file', 'catatan');
-        }])
-        ->get();
-        
-        // $pelangganFoto = Pelanggan::has('fotos')
+        // $pelangganFoto = Pelanggan::has('fotos','>=', 28)
         // ->with(['fotos' => function ($query) {
         //     $query->select('pelanggans_id', 'file', 'catatan');
         // }])
         // ->get();
+        $pelangganFoto = Pelanggan::with(['fotos' => function ($query) {
+            $query->select('pelanggans_id', 'file', 'catatan');
+        }])
+        ->whereHas('fotos', function ($subQuery) {
+            $subQuery->where('status', 'progress')
+                ->groupBy('pelanggans_id')
+                ->havingRaw('COUNT(*) = 28');
+        })
+        ->get();
 
-        // $hasilRevisi = Pelanggan::join('pelanggan_fotos', 'pelanggans.id', '=', 'pelanggan_fotos.pelanggans_id')
-        // ->where('pelanggan_fotos.status', 'NOK')
-        // ->select('pelanggans.*')
-        // ->with('fotos')
-        // ->take(1)
-        // ->get();
+
         $hasilRevisi = Pelanggan::whereHas('fotos', function ($query) {
             $query->where('status_revisi', 'DIKIRIMKAN');
         })->with(['fotos' => function ($query) {
