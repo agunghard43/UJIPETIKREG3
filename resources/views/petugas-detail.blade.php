@@ -3207,10 +3207,8 @@
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
-    </script>
-    <script src="https://kit.fontawesome.com/e360b5871d.js" crossorigin="anonymous">
-        < /><script src="https:/ / cdn.jsdelivr.net / npm / sweetalert2 @11 ">
-    </script>
+    <script src="https://kit.fontawesome.com/e360b5871d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/script.js') }}">
         < script >
             document.addEventListener('DOMContentLoaded', function() {
