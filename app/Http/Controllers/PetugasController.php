@@ -33,7 +33,7 @@ class PetugasController extends Controller
         })->with(['fotos' => function ($query) {
             $query->select('id', 'pelanggans_id');
         }])->get();
-        
+
         $statusRevisiOK = false;
         // dd($pelanggansRevisi);
         $revisiData = [];
@@ -49,8 +49,8 @@ class PetugasController extends Controller
             }
         }
         // dd($pelanggansRevisi);
-   
-     
+
+
         return view('petugas', compact('pelanggansIndex','pelanggansRevisi', 'areas','revisiData','statusRevisiOK' ));
     }
 
@@ -62,7 +62,7 @@ class PetugasController extends Controller
         if ($request->query('mark_as_read')) {
             $notificationId = $request->query('notification_id');
             $notification = auth()->user()->notifications->find($notificationId);
-            
+
             if ($notification) {
                 $notification->markAsRead();
             }
@@ -77,26 +77,26 @@ class PetugasController extends Controller
         ];
         $pelanggans = Pelanggan::findOrFail($id);
         $images = PelangganFoto::all();
- 
-        // session()->forget('success_' . $pelanggans->id . '_' . 'odp_21');
+
+        // session()->forget('success_' . $pelanggans->id . '_' . 'odp_1');
         // session()->forget('success_' . $pelanggans->id . '_' . 'odp_15');
 
         return view('petugas-detail',[
-        'pelanggans' => $pelanggans, 
+        'pelanggans' => $pelanggans,
         'areas' => $areas,
         'images' => $images,
         ]);
-       
+
     }
 
 
     public function store(Request $request, $pelanggans_id, $odp) {
-       
+
         $validator = Validator::make($request->all(),[
             "file" => "required|image|mimes:jpeg,png,jpg",
             "catatan" => "required",
             "odp" => "nullable",
-            
+
         ],[
             'file.required' => 'file harus diisi',
             'catatan.required' => 'catatan harus diisi',
@@ -114,35 +114,49 @@ class PetugasController extends Controller
         $file = $request->file('file');
         $odp = $request->input('odp');
         $status = 'PROGRESS';
+        $statusCatatan = 0;
         $existingData = PelangganFoto::where('pelanggans_id', $pelanggans_id)
         ->where('odp', $odp)
-        ->exists();
+        ->first();
 
         if ($existingData) {
-            return redirect()->back()->with('error', 'Form dengan ' . $odp . ' sudah dikirimkan.');
-        }
-        
-        $file_name = time() . '_' . $file->getClientOriginalName();
-        $foto = new PelangganFoto([
-            'file' => $file_name,
-            'catatan' => $request->catatan,
-            'odp' => $odp,
-            'pelanggans_id' => $pelanggans_id,
-            'status' => $status,
-        ]);
+            $statusCatatan = $existingData->status_catatan + 1;
+            $existingData->status_catatan = $statusCatatan;
+            $existingData->catatan = $request->catatan;
 
-        $file->storeAs('public/images', $file_name);
-        $pelanggan->fotos()->save($foto);
-        
+            $file_name = time() . '_' . $file->getClientOriginalName();
+            $existingData->file = $file_name;
+
+            $file->storeAs('public/images', $file_name);
+
+            $existingData->save();
+            $existingData->save();
+            $message = 'Form ' . $odp . ' berhasil di-update.';
+        }
+        else {
+            $file_name = time() . '_' . $file->getClientOriginalName();
+            $foto = new PelangganFoto([
+                'file' => $file_name,
+                'catatan' => $request->catatan,
+                'odp' => $odp,
+                'pelanggans_id' => $pelanggans_id,
+                'status' => $status,
+                'status_catatan' => $statusCatatan
+            ]);
+            $file->storeAs('public/images', $file_name);
+            $pelanggan->fotos()->save($foto);
+            $message = 'Form ' . $odp . ' berhasil ditambahkan.';
+        }
+
         if ($odp === 'odp_28') {
             $validatorUsers = User::where('role_id', 2)->get();
             Notification::send($validatorUsers, new ValidatorCreatedNotification($pelanggan));
             return redirect()->route('petugas.index')->with('success', 'Semua form ODP telah berhasil diisi.');
         }
 
-        $sessionName = 'success_' . $pelanggans_id . '_' . $odp;
-        $request->session()->put($sessionName, 'Form ' . $odp . ' berhasil dikirim.');
-        return redirect()->back();
+        // $sessionName = 'success_' . $pelanggans_id . '_' . $odp;
+        // $request->session()->put($sessionName, 'Form ' . $odp . ' berhasil dikirim.');
+        return redirect()->back()->with('success', $message);
 
     }
 
@@ -150,7 +164,7 @@ class PetugasController extends Controller
         if ($request->query('mark_as_read')) {
             $notificationId = $request->query('notification_id');
             $notification = auth()->user()->notifications->find($notificationId);
-            
+
             if ($notification) {
                 $notification->markAsRead();
             }
@@ -201,9 +215,9 @@ class PetugasController extends Controller
             'odp_27'=> 'Kabel melalui jalur yang sudah disiapkan di rumah',
             'odp_28'=> 'Pengukuran Redaman Power ONT Rx Level mengunakan
             Ibooster',
-      
+
         ];
-    
+
         $pelanggans = Pelanggan::with(['fotos' => function ($query) {
             $query->where('status_revisi', 'NOK');
         }])
@@ -212,11 +226,11 @@ class PetugasController extends Controller
         foreach ($pelanggans->fotos as $foto) {
             $foto->time_diff = Carbon::parse($foto->updated_at)->diffForHumans();
         }
-        
+
         return view('petugas-revisi', compact('pelanggans','areas','odpDescriptions'));
     }
 
-    
+
     public function updateBukti(Request $request, $id) {
         $request->validate([
             // 'foto_id' => 'required|array',
@@ -227,16 +241,16 @@ class PetugasController extends Controller
             'catatan.*.required' => 'Catatan harus diisi.',
             'file.*.required' => 'File harus berupa JPEG,PNG,JPG.',
         ]);
-    
+
         $pelanggan = Pelanggan::findOrFail($id);
-      
-        $isRevised = false; 
+
+        $isRevised = false;
         foreach ($pelanggan->fotos as $index => $foto) {
         if ($foto->status_revisi === 'NOK') {
             $inputCatatan = $request->input('catatan_' . $foto->id);
             $inputFile = $request->file('file_' . $foto->id);
             $statusRevisi = $request->input('status_revisi_' . $foto->id);
-            
+
             $updateData = [];
 
             if (!empty($inputCatatan)) {
@@ -253,15 +267,15 @@ class PetugasController extends Controller
             }
             if (!empty($updateData)) {
                 $foto->update($updateData);
-                $isRevised = true; 
+                $isRevised = true;
                 // $validator = User::where('role_id', 2)->get();
                 // Notification::send($validator, new ValidatorRevisiNotification($pelanggan));
             }
 
         }
         }
-        
- 
+
+
         // // Periksa apakah ada foto dengan status 'NOK'
         // $adaFotoNOK = $pelanggan->fotos->where('status', 'NOK')->count() > 0;
 
@@ -270,22 +284,22 @@ class PetugasController extends Controller
         // $pelanggan->update(['status_revisi' => $adaFotoNOK ? 'Dikirimkan' : '']);
 
             if ($isRevised) {
-              
+
                 // Jika ada revisi, kirim notifikasi ke validator
                 $validator = User::where('role_id', 2)->get();
                 Notification::send($validator, new ValidatorRevisiNotification($pelanggan));
 
-             
+
 
             }
-            
+
             session()->put('bukti_direvisi_' . $id, false);
             session()->put('revisi_selesai_' . $id, true);
             return redirect()->route('petugas.index')
             ->with('success', 'Data revisi berhasil direvisi, tunggu validator untuk cek.');
-            
+
     }
-   
+
 }
 
 

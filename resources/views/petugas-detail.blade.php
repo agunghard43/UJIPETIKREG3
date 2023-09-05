@@ -130,17 +130,27 @@
                                                 {{ session('error') }}
                                             </div>
                                         @endif
-
+                                        @if ($errors->any())
+                                            <div class="col">
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{!! $error !!}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
                                         <table class="table table-condensed table-striped" style="color:#000000">
 
                                             <tbody>
-                                                {{-- @if ($message = Session::get('success'))
-                                    <div class="col">
-                                        <div class="alert alert-success">
-                                            <strong class="">{{ $message }}</strong>
-                                        </div>
-                                    </div>
-                                    @endif --}}
+                                                @if ($message = Session::get('success'))
+                                                    <div class="col">
+                                                        <div class="alert alert-success">
+                                                            <strong class="">{{ $message }}</strong>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 {{-- @if ($errors->any())
                                     <div class="col">
                                         <div class="alert alert-danger">
@@ -179,105 +189,107 @@
                                                             SC-UPC</td>
                                                         <td style="vertical-align: middle !important;">:</td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_odp_1'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_odp_1') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_odp_1') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_1']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_1">
-                                                                        <input type="hidden" name="pelanggans_id"
-                                                                            value="{{ $pelanggans->id }}">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal1">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal1"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_odp_1'))
+                                                <div class="alert alert-success">
+                                                    {{ session('success_' . $pelanggans->id . '_odp_1') }}
+                                                </div>
+                                                {{ session()->forget('success_' . $pelanggans->id . '_odp_1') }}
+                                                @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_1']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_1">
+                                                                    <input type="hidden" name="pelanggans_id"
+                                                                        value="{{ $pelanggans->id }}">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal1">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal1"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="hidden"
+                                                                                                        name="odp_id">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="hidden"
-                                                                                                            name="odp_id">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
+                                                                                    </div>
 
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
-
-
                                                                         </div>
 
+
                                                                     </div>
-                                                                </form>
-                                                            @endif
+
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -288,99 +300,101 @@
                                                         <td style="vertical-align: middle !important;" width="1%">
                                                             :</td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_2'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_2') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_2') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_2']) }})}}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_2">
-                                                                        <input type="hidden" name="pelanggans_id"
-                                                                            value="{{ $pelanggans->id }}">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal2">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal2"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_2'))
+                                                <div class="alert alert-success">
+                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_2') }}
+                                                </div>
+                                                {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_2') }}
+                                                @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_2']) }})}}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_2">
+                                                                    <input type="hidden" name="pelanggans_id"
+                                                                        value="{{ $pelanggans->id }}">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal2">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal2"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -394,96 +408,98 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_3'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_3') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_3') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_3']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_3">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal3">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal3"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_3'))
+                                             <div class="alert alert-success">
+                                                 {{ session('success_' . $pelanggans->id . '_' . 'odp_3') }}
+                                             </div>
+                                             {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_3') }}
+                                             @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_3']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_3">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal3">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal3"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -496,98 +512,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_4'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_4') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_4') }}  --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_4']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_4">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal4">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal4"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_4'))
+                                               <div class="alert alert-success">
+                                                   {{ session('success_' . $pelanggans->id . '_' . 'odp_4') }}
+                                               </div>
+                                               {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_4') }}
+                                               @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_4']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_4">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal4">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal4"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -600,98 +618,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_5'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_5') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_5') }}     --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_5']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_5">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal5">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal5"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_5'))
+                                                 <div class="alert alert-success">
+                                                     {{ session('success_' . $pelanggans->id . '_' . 'odp_5') }}
+                                                 </div>
+                                                 {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_5') }}
+                                                 @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_5']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_5">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal5">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal5"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -704,98 +724,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_6'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_6') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_6') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_6']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_6">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal6">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal6"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_6'))
+                                                  <div class="alert alert-success">
+                                                      {{ session('success_' . $pelanggans->id . '_' . 'odp_6') }}
+                                                  </div>
+                                                  {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_6') }}
+                                                  @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_6']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_6">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal6">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal6"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -809,98 +831,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_7'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_7') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_7') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_7']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_7">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal7">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal7"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_7'))
+                                               <div class="alert alert-success">
+                                                   {{ session('success_' . $pelanggans->id . '_' . 'odp_7') }}
+                                               </div>
+                                               {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_7') }}
+                                                 @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_7']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_7">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal7">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal7"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -913,98 +937,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_8'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_8') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_8') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_8']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_8">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal8">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal8"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_8'))
+                                                  <div class="alert alert-success">
+                                                      {{ session('success_' . $pelanggans->id . '_' . 'odp_8') }}
+                                                  </div>
+                                                  {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_8') }}
+                                                   @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_8']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_8">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal8">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal8"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                     </tr>
 
                                                     <tr>
@@ -1016,98 +1042,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_9'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_9') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_9') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_9']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_9">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal9">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal9"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_9'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_9') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_9') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_9']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_9">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal9">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal9"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -1120,98 +1148,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_10'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_10') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_10') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_10']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_10">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal10">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal10"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_10'))
+                                               <div class="alert alert-success">
+                                                   {{ session('success_' . $pelanggans->id . '_' . 'odp_10') }}
+                                               </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_10') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_10']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_10">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal10">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal10"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -1224,98 +1254,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_11'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_11') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_11') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_11']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_11">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal11">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal11"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_11'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_11') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_11') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_11']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_11">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal11">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal11"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -1328,98 +1360,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_12'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_12') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_12') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_12']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_12">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal12">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal12"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_12'))
+                                             <div class="alert alert-success">
+                                                 {{ session('success_' . $pelanggans->id . '_' . 'odp_12') }}
+                                             </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_12') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_12']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_12">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal12">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal12"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -1432,98 +1466,100 @@
                                                         <td
                                                             style="vertical-align: middle !important;
                                               ">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_13'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_13') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_13') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_13']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_13">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal13">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal13"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_13'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_13') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_13') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_13']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_13">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal13">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal13"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
                                                 </div>
@@ -1545,306 +1581,314 @@
                                                             nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_14'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_14') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_14') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_14']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_14">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal14">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal14"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_14'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_14') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_14') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_14']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_14">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal14">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal14"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
                                                     <tr>
                                                         <td style="vertical-align: middle !important;font-size:12px;"
-                                                            width="1%">2. Di rumah pelanggan menggunakan clamp hook
-                                                            &amp;
+                                                            width="1%">2. Di rumah pelanggan menggunakan clamp
+                                                            hook &amp;
                                                             s-clamp</td>
-                                                        <td style="vertical-align: middle !important;" width="1%"
-                                                            nowrap="">:
+                                                        <td style="vertical-align: middle !important;"
+                                                            width="1%" nowrap="">:
                                                         </td>
 
                                                         <td style="vertical-align: middle !important;">
 
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_15'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_15') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_15') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_15']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_15">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal15">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal15"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_15'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_15') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_15') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_15']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_15">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal15">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal15"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
                                                     <tr>
                                                         <td style="vertical-align: middle !important;font-size:12px;"
                                                             width="1%">3. Tidak terdapat sambungan</td>
-                                                        <td style="vertical-align: middle !important;" width="1%"
-                                                            nowrap="">:
+                                                        <td style="vertical-align: middle !important;"
+                                                            width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_16'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_16') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_16') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_16']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_16">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal16">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal16"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_16'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_16') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_16') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_16']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_16">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal16">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal16"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -1855,98 +1899,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_17'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_17') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_17') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_16']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_17">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal17">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal17"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_17'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_17') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_17') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_16']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_17">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal17">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal17"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -1959,98 +2006,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_18'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_18') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_18') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_18']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_18">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal18">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal18"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_18'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_18') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_18') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_18']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_18">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal18">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal18"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2062,98 +2112,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_19'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_19') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_19') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_19']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_19">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal19">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal19"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_19'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_19') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_19') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_19']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_19">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal19">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal19"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2165,98 +2218,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_20'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_20') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_20') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_20']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_20">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal20">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal20"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_20'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_20') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_20') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_20']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_20">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal20">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal20"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2269,98 +2325,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_21'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_21') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_21') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_21']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_21">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal21">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal21"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_21'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_21') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_21') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_21']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_21">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal21">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal21"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2372,98 +2431,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_22'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_22') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_22') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_22']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_22">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal22">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal22"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_22'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_22') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_22') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_22']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_22">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal22">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal22"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
 
-                                                                                            <div class="col-md-12">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
                                                 </div>
@@ -2486,98 +2548,101 @@
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
 
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_23'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_23') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_23') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_23']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_23">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal23">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal23"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_23'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_23') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_23') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_23']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_23">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal23">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal23"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2590,98 +2655,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_24'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_24') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_24') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_24']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_24">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal24">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal24"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_24'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_24') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_24') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_24']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_24">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal24">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal24"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2694,98 +2762,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_25'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_25') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_25') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_25']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_25">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal25">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal25"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_25'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_25') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_25') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_25']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_25">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal25">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal25"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2798,98 +2869,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_26'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_26') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_26') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_26']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_26">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal26">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal26"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_26'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_26') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_26') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_26']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_26">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal26">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal26"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -2901,98 +2975,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_27'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_27') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_27') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_27']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_27">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal27">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal27"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_27'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_27') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_27') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_27']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_27">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal27">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal27"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
 
@@ -3005,98 +3082,101 @@
                                                             width="1%" nowrap="">:
                                                         </td>
                                                         <td style="vertical-align: middle !important;">
-                                                            @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_28'))
-                                                                <div class="alert alert-success">
-                                                                    {{ session('success_' . $pelanggans->id . '_' . 'odp_28') }}
-                                                                </div>
-                                                                {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_28') }} --}}
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_28']) }}"
-                                                                    method="post" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-floating d-flex">
-                                                                        <input type="hidden" name="odp"
-                                                                            value="odp_28">
-                                                                        <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                                                        <label for="floatingTextarea">Catatan</label>
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button"
-                                                                            class="btn btn-success ms-2"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal28">
-                                                                            <i class="fa fa-plus-circle"></i>
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal28"
-                                                                            tabindex="-1"
-                                                                            aria-labelledby="exampleModalLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="exampleModalLabel">
-                                                                                            UPLOAD</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-md-12">
+                                                            {{-- @if (session()->has('success_' . $pelanggans->id . '_' . 'odp_28'))
+                                            <div class="alert alert-success">
+                                                {{ session('success_' . $pelanggans->id . '_' . 'odp_28') }}
+                                            </div> --}}
+                                                            {{-- {{ session()->forget('success_' . $pelanggans->id . '_' . 'odp_28') }} --}}
+                                                            {{-- @else --}}
+                                                            <form
+                                                                action="{{ route('petugas.store', ['id' => $pelanggans->id, 'odp' => 'odp_28']) }}"
+                                                                method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="form-floating d-flex">
+                                                                    <input type="hidden" name="odp"
+                                                                        value="odp_28">
+                                                                    <textarea class="form-control" name="catatan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                                                    <label for="floatingTextarea">Catatan</label>
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button"
+                                                                        class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal28">
+                                                                        <i class="fa fa-plus-circle"></i>
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal28"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">UPLOAD
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
 
+                                                                                            <div class="form-group">
+                                                                                                <label for=""
+                                                                                                    class="col-md-2 control-label">Berkas</label>
                                                                                                 <div
-                                                                                                    class="form-group">
-                                                                                                    <label
-                                                                                                        for=""
-                                                                                                        class="col-md-2 control-label">Berkas</label>
+                                                                                                    class="col-md-10 ms-3">
+                                                                                                    <input
+                                                                                                        type="file"
+                                                                                                        name="file"
+                                                                                                        id="image"
+                                                                                                        area-required="true">
+                                                                                                    <p
+                                                                                                        class="help-block">
+                                                                                                        <em>
+                                                                                                            File
+                                                                                                            extension
+                                                                                                            jpg. jpeg or
+                                                                                                            png
+                                                                                                        </em>
+                                                                                                    </p>
+                                                                                                    <hr
+                                                                                                        class="inner">
+                                                                                                    <img id="image-preview"
+                                                                                                        src=""
+                                                                                                        alt="Preview"
+                                                                                                        class="img-fluid"
+                                                                                                        style="display: none;">
                                                                                                     <div
-                                                                                                        class="col-md-10 ms-3">
-                                                                                                        <input
-                                                                                                            type="file"
-                                                                                                            name="file"
-                                                                                                            area-required="true">
-                                                                                                        <p
-                                                                                                            class="help-block">
-                                                                                                            <em>
-                                                                                                                File
-                                                                                                                extension
-                                                                                                                jpg.
-                                                                                                                jpeg or
-                                                                                                                png
-                                                                                                            </em>
-                                                                                                        </p>
-                                                                                                        <hr
-                                                                                                            class="inner">
-                                                                                                        <div
-                                                                                                            class="form-group d-flex justify-content-lg-center">
-                                                                                                            <button
-                                                                                                                class="btn btn-primary"
-                                                                                                                type="submit">
-                                                                                                                <i
-                                                                                                                    class="fa fa-check-circle"></i>
-                                                                                                                Submit
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                                        class="form-group d-flex justify-content-lg-center">
+                                                                                                        <button
+                                                                                                            class="btn btn-primary"
+                                                                                                            type="submit">
+                                                                                                            <i
+                                                                                                                class="fa fa-check-circle"></i>
+                                                                                                            Submit
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-
                                                                                             </div>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close</button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Close</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            @endif
+                                                                </div>
+                                                            </form>
+                                                            {{-- @endif --}}
                                                         </td>
                                                     </tr>
                                                 </div>
@@ -3127,30 +3207,33 @@
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
-    <script src="{{ asset('assets/js/script.js') }}"></script>
-    <script src="https://kit.fontawesome.com/e360b5871d.js" crossorigin="anonymous"></script>
+    </script>
+    <script src="https://kit.fontawesome.com/e360b5871d.js" crossorigin="anonymous">
+        < /><script src="https:/ / cdn.jsdelivr.net / npm / sweetalert2 @11 ">
+    </script>
+    <script src="{{ asset('assets/js/script.js') }}">
+        < script >
+            document.addEventListener('DOMContentLoaded', function() {
+                var imageInput = document.getElementById('image');
+                var imagePreview = document.getElementById('image-preview');
 
-    {{-- <script>
-        // Objek untuk melacak status pengiriman form berdasarkan odp
-        var formStatus = {};
+                imageInput.addEventListener('change', function() {
+                    var file = imageInput.files[0];
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        imagePreview.src = '';
+                        imagePreview.style.display = 'none';
+                    }
+                });
+            });
+    </script>
 
-        // Fungsi untuk mengirim form
-        function submitForm(form) {
-            var odp = form.querySelector('input[name="odp"]').value;
-
-            if (formStatus[odp]) {
-                alert('Form dengan ODP ' + odp + ' sudah dikirimkan.');
-                return false; // Mencegah pengiriman ulang
-            }
-
-            // Tandai form sebagai sudah dikirimkan
-            formStatus[odp] = true;
-
-            // Lanjutkan pengiriman form (anda bisa menambahkan kode AJAX di sini jika perlu)
-
-            return true;
-        }
-    </script> --}}
 
 
 
